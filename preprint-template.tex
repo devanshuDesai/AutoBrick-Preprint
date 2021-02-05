@@ -48,6 +48,28 @@
 \titlespacing\subsection{0pt}{10pt plus 3pt minus 3pt}{1pt plus 1pt minus 1pt}
 \titlespacing\subsubsection{0pt}{8pt plus 3pt minus 3pt}{1pt plus 1pt minus 1pt}
 
+% ORCiD insertion
+\usepackage{tikz,xcolor,hyperref}
+
+\definecolor{lime}{HTML}{A6CE39}
+\DeclareRobustCommand{\orcidicon}{
+	\begin{tikzpicture}
+	\draw[lime, fill=lime] (0,0) 
+	circle [radius=0.16] 
+	node[white] {{\fontfamily{qag}\selectfont \tiny ID}};
+	\draw[white, fill=white] (-0.0625,0.095) 
+	circle [radius=0.007];
+	\end{tikzpicture}
+	\hspace{-2mm}
+}
+\foreach \x in {A, ..., Z}{\expandafter\xdef\csname orcid\x\endcsname{\noexpand\href{https://orcid.org/\csname orcidauthor\x\endcsname}
+			{\noexpand\orcidicon}}
+}
+% Define the ORCID iD command for each author separately. Here done for two authors.
+\newcommand{\orcidauthorA}{0000-0000-0000-0001}
+\newcommand{\orcidauthorB}{0000-0000-0000-0002}
+\newcommand{\orcidauthorC}{0000-0000-0000-0003}
+\newcommand{\orcidauthorD}{0000-0000-0000-0004}
 
 %%%%%%%%%%%%%%%%   Title   %%%%%%%%%%%%%%%%
 \title{A preprint template for LaTeX users}
@@ -64,8 +86,9 @@
 %%%%%%%%%%%%%%%  Author list  %%%%%%%%%%%%%%%
 \usepackage{authblk}
 \renewcommand*{\Authfont}{\bfseries}
-\author[1\thanks{\tt{asmith@college.edu}}]{Alice Smith}
-\author[2]{Bob Jones}
+\author[1\thanks{\tt{asmith@college.edu}}]{Alice Smith\orcidA{}}
+\author[2]{Bob Jones\orcidB{}}
+
 \affil[1]{Department of Mathematics, University X}
 \affil[2]{Department of Biology, University Y}
 
