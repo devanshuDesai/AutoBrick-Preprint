@@ -1,6 +1,6 @@
 
 # preprint-template.tex
-An information-dense, two-column LaTeX template designed for, e.g., [EarthArXiv](https://eartharxiv.org) preprints. Some compiled examples can be seen [here](https://eartharxiv.org/discover?q=brenhin).
+An information-dense, two-column LaTeX template designed for, e.g., [EarthArXiv](https://eartharxiv.org) preprints. Some compiled examples can be seen [here](https://brenhinkeller.github.io/files/KellerHarrison2020Preprint.pdf) or [here](https://brenhinkeller.github.io/files/GreatUnconformity2019Preprint.pdf).
 
 This repository is forked and somewhat heavily modified from https://github.com/kourgeorge/arxiv-style. 
 
