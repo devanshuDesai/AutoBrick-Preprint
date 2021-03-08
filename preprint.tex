@@ -195,7 +195,7 @@ To automate data transformations, we use the pandas module to load the data in m
 \begin{figure}[H]
   \centering
   \fbox{\includegraphics[scale=0.15]{brick_viewer.png}}
-  \caption{A sample visualization of a turtle file visualized in the Brick Viewer tool.}
+  \caption{We can also use the Brick Viewer tool [8] to eyeball the relationship graph of the building sub-systems.}
   \label{fig:fig3}
 \end{figure}
 
@@ -209,10 +209,20 @@ around 30\% accurate [5]. The Reconciliation API uses an extensive key-value pai
 
 	The second part of augmenting the tool’s robustness relates to dealing with point label values with an unequal number of splits with the specified delimiters. In our current implementation, we assume the point labels split into a uniform number of elements. For point labels that split into fewer values, we consider these point-labels invalid (as we did encounter spurious point label values during our testing). Filtering out these point-labels renders the remaining values invalid. During the preprocessing stage, we drop rows with any null values. In other words, we treat point labels with the maximum number of splits possible in the dataset as the only legitimate kind of point label value for that dataset. Dealing with diverse but correct formats of point labels in a single dataset is an open research question needing collaboration with domain experts and is left to future work.
 
-% TODO: ARENA POC + next steps
+Finally, we are also working on a virtual reality front end to interact and
+query with the automatically generated turtle files. The environment is set up
+as a scene on a platform called ARENA [4]. We set up a server that listens for
+events and user interactions with the 3D objects in ARENA and translates those
+interactions into queries performed on the BRICK-compatible building
+information. This environment allows us to map physical spaces into equivalent virtual ones.
 
 \section{Results and Conclusion}
-AutoBrick automates and accelerates a painfully manual process, thereby empowering building management and vendors to truly realize the power of data-driven applications and advanced analytics to augment user experience in commercial buildings. AutoBrick also gives rise to the potential of representing building sub-systems as virtual spaces to reduce the need for engineers to physically climb into narrow building spaces and virtually observe and ‘interact’ with sensor setpoints. To truly reap the benefits of AutoBrick, the workflow and use case coverage need to be continually examined by domain experts and industry practitioners to ensure the tool meets their needs at all times. This paper aims to set the foundation for tangibly realizing ‘smart’ buildings and adopt technological advancements moving forward.
+AutoBrick automates and accelerates a painfully manual process, thereby
+empowering building management and vendors to truly realize the power of
+data-driven applications and advanced analytics to augment user experience in
+commercial buildings. AutoBrick also gives rise to the potential of
+representing building sub-systems as virtual spaces to reduce the need for
+engineers to physically climb into the building's HVAC system equipment and virtually observe and ‘interact’ with sensor setpoints. To truly reap the benefits of AutoBrick, the workflow and use case coverage need to be continually examined by domain experts and industry practitioners to ensure the tool meets their needs at all times. This paper aims to set the foundation for tangibly realizing ‘smart’ buildings and adopt technological advancements moving forward.
 
 % \paragraph{Paragraph}
 % \lipsum[7]
