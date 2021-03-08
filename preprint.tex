@@ -34,7 +34,8 @@
 \usepackage{float}			% Allows for figures within multicol
 %\usepackage{multicol}		% Multiple columns (Method B)
 
-\usepackage{lipsum}		%  Filler text
+\usepackage{graphicx}		%  Images
+\graphicspath{.}
 
  %% Special figure caption options
 \usepackage{newfloat}
@@ -72,7 +73,7 @@
 \newcommand{\orcidauthorD}{0000-0000-0000-0004}
 
 %%%%%%%%%%%%%%%%   Title   %%%%%%%%%%%%%%%%
-\title{AutoBrickify: A system for end-to-end automation of building point labels to Brick turtle files}
+\title{AutoBrick: A system for end-to-end automation of building point labels to Brick turtle files}
 
 % Add watermark with submission status
 \usepackage{xwatermark}
@@ -154,7 +155,14 @@ Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a slow
 
 
 \section{Background}
-% TODO: Add figure 1
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[scale=0.17]{traditional_workflow.png}}
+  \caption{ Traditional pre-existing Brickification workflow as per the tutorial in 4(1) }
+  \label{fig:fig1}
+\end{figure}
+
 The traditional Brickification workflow involves:
 \begin{enumerate}
     \item an open-source Excel-like tool called ‘OpenRefine,’ where users need to perform manual data transformations [5],
@@ -165,7 +173,14 @@ The traditional Brickification workflow involves:
 As symbolized in Figure 1, the data transformations and most of the API injections and integrations need to be manually done by the user. The BrickBuilder tool is the only component to automate the last part of this workflow. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload. We don’t seek to reinvent the wheel here but address automation, acceleration, and scalability improvements on top of these existing systems.
 
 \section{Our Framework}
-% TODO: Add figure 2
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[scale=0.45]{autobrick_workflow.png}}
+  \caption{The proposed workflow through AutoBrick}
+  \label{fig:fig2}
+\end{figure}
+
 ‘AutoBrick’ is an end-to-end system for automating and accelerating the conversion of point labels into turtle files with Brick terminology, which can be visualized, queried, and utilized by the Brick programming platform. As displayed in Figure 2, the tool takes a configuration file where users can declaratively specify all details about their data and workload (related to data location, point label format details, and additional parsing details). AutoBrick automates all needed data transformations to pre-process the point labels and extract relevant information of various units/sensors and categories related to specific building objects. AutoBrick utilizes pre-written / pre-loaded standard ER/RDF specifications and existing APIs to inject and stitch them on the pre-processed data as per the original sequence of steps followed for Brickification. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload and address automation, acceleration, and scalability improvements on top of the existing implementations. 
 
 	AutoBrick allows for flexibility in using arbitrary CSV files and chosen/specified point label formats. With the project, we give the power in the user’s hands for them to decide the appropriate dataset parsing/preprocessing strategies, rather than making unverified assumptions about point label structures or utilizing unreliable custom static analysis or auto-generation techniques. AutoBrick has already “brickified” 41 point label datasets of various buildings in UCSD’s Engineering Department, reducing the need for human intervention to a matter of minutes. Initial experiments and demos have already showcased AutoBrickify reducing ~10-15 mins of manual grunt work as part of “brickifying” one dataset (as part of the tutorial in 4(1)) to a matter of <10 seconds, achieving orders-of-magnitude (over 90x) speed-ups and scalability!
@@ -177,7 +192,13 @@ To automate data transformations, we use the pandas module to load the data in m
 	Utilizing shell, we write some custom scripts to clone the APIs, load them in the execution environment, and call them according to their instructions to supply the pre-processed data to their API function calls automatically.  
 	Because modules such as pandas are pre-installed in a standard python environment, the tool doesn’t have any unique dependencies. It just needs to rely on the brick-builder API’s dependencies (i.e., two modules, brickschema and rdflib). The lack of dependencies further makes the tool lightweight for smooth usage. The requirements are directly taken (and hence can even be updated) from the loaded APIs themselves, making it seamless to piggyback on top of the APIs made for Brickification.
 
-% TODO: Add image 2
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[scale=0.15]{brick_viewer.png}}
+  \caption{A sample visualization of a turtle file visualized in the Brick Viewer tool.}
+  \label{fig:fig3}
+\end{figure}
+
 
 Our validation process involves both automated and manual aspects. Since we don't have any target files to compare our outputs with, we use domain experts working under our mentor. Domain experts carefully go through the generated turtle files and verify if the outputs match their expectations. The automated component involves running some automated test queries on the generated files to ensure that the graphical model can be parsed error-free, and we’ve showcased some of such queries in one of our demos as well.
 
