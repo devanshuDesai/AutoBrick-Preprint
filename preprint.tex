@@ -149,7 +149,12 @@ maintenance, machine learning (ML) applications, etc., to augment user
 experience. However, their data collection / ETL methodologies don’t conform to
 a uniform schema to enable buildings to ‘interact’ with each other or
 streamline the process of analytics and ML at scale. The US building industry
-suffers a loss of \$1.5B / year due to the lack of interoperable warehousing between different buildings [1]. Brick offers a comprehensive schema to represent arbitrary buildings metadata, build programmatic platforms for commercial buildings, improve interoperability between different buildings, and pave the way for well-defined ways of analyses related to planned maintenance and machine learning, etc. [1]. 
+suffers a loss of \$1.5B / year due to the lack of interoperable warehousing
+between different buildings \cite{balaji_2016}. Brick offers a comprehensive
+schema to represent arbitrary buildings metadata, build programmatic platforms
+for commercial buildings, improve interoperability between different buildings,
+and pave the way for well-defined ways of analyses related to planned
+maintenance and machine learning, etc. \cite{balaji_2016}. 
 
 Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a slow process bogged down by manual interventions into partially-automated processes and grunt work. This process involves custom data transformations, object-relationship definitions, and manually plugging intermediate results into various heterogeneous frameworks to get a Turtle file parseable by Brick. Different kinds of building point label (metadata string) formats that sabotage the notion of a ‘one-size fits all’ solution further intensify these challenges.  Additionally, this is also motivated by real-life use cases such as the COVID-19 global pandemic, where the public safety regulations in indoor environments (classrooms, offices, etc.) remain a massively unsolved research question and challenge at scale.
 
@@ -165,10 +170,15 @@ Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a slow
 
 The traditional Brickification workflow involves:
 \begin{enumerate}
-    \item an open-source Excel-like tool called ‘OpenRefine,’ where users need to perform manual data transformations [5],
-    \item a ‘Reconciliation API,’ to infer the class of specific objects in terms of Brick’s vocabulary [6],
-    \item Entity-relationship definitions in a .txt file, to utilize in the turtle file [7], and
-    \item a tool called ‘Brick Builder’ to convert the processed data into its turtle file [8].
+    \item an open-source Excel-like tool called ‘OpenRefine,’ where users need
+        to perform manual data transformations
+        \cite{gtfierro225_2020},
+    \item a ‘Reconciliation API,’ to infer the class of specific objects in
+        terms of Brick’s vocabulary \cite{brickschema},
+    \item Entity-relationship definitions in a .txt file, to utilize in the
+        turtle file \cite{gtfierro}, and
+    \item a tool called ‘Brick Builder’ to convert the processed data into its
+        turtle file \cite{brick_ttl_viewer}.
 \end{enumerate}
 As symbolized in Figure 1, the data transformations and most of the API injections and integrations need to be manually done by the user. The BrickBuilder tool is the only component to automate the last part of this workflow. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload. We don’t seek to reinvent the wheel here but address automation, acceleration, and scalability improvements on top of these existing systems.
 
@@ -195,7 +205,8 @@ To automate data transformations, we use the pandas module to load the data in m
 \begin{figure}[H]
   \centering
   \fbox{\includegraphics[scale=0.15]{brick_viewer.png}}
-  \caption{We can also use the Brick Viewer tool [8] to eyeball the relationship graph of the building sub-systems.}
+  \caption{We can also use the Brick Viewer tool
+  \cite{brick_ttl_viewer} to eyeball the relationship graph of the building sub-systems.}
   \label{fig:fig3}
 \end{figure}
 
@@ -205,13 +216,13 @@ Our validation process involves both automated and manual aspects. Since we don'
 \section{Work Extensions}
 One of the biggest challenges faced in the Brickification workflow is the
 predictions of Brick Classes by the Reconciliation API, which have only been
-around 30\% accurate [5]. The Reconciliation API uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AutoBrick directly uses the latest version of the API, automatically reflecting better results as the API improves. 
+around 30\% accurate \cite{gtfierro225_2020}. The Reconciliation API uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AutoBrick directly uses the latest version of the API, automatically reflecting better results as the API improves. 
 
 	The second part of augmenting the tool’s robustness relates to dealing with point label values with an unequal number of splits with the specified delimiters. In our current implementation, we assume the point labels split into a uniform number of elements. For point labels that split into fewer values, we consider these point-labels invalid (as we did encounter spurious point label values during our testing). Filtering out these point-labels renders the remaining values invalid. During the preprocessing stage, we drop rows with any null values. In other words, we treat point labels with the maximum number of splits possible in the dataset as the only legitimate kind of point label value for that dataset. Dealing with diverse but correct formats of point labels in a single dataset is an open research question needing collaboration with domain experts and is left to future work.
 
 Finally, we are also working on a virtual reality front end to interact and
 query with the automatically generated turtle files. The environment is set up
-as a scene on a platform called ARENA [4]. We set up a server that listens for
+as a scene on a platform called ARENA \cite{conix-center}. We set up a server that listens for
 events and user interactions with the 3D objects in ARENA and translates those
 interactions into queries performed on the BRICK-compatible building
 information. This environment allows us to map physical spaces into equivalent virtual ones.
