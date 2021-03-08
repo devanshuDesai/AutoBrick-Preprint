@@ -73,7 +73,7 @@
 \newcommand{\orcidauthorD}{0000-0000-0000-0004}
 
 %%%%%%%%%%%%%%%%   Title   %%%%%%%%%%%%%%%%
-\title{AutoBrick: A system for end-to-end automation of building point labels to Brick turtle files}
+\title{AUTOBRICK: A system for end-to-end automation of building point labels to Brick turtle files}
 
 % Add watermark with submission status
 \usepackage{xwatermark}
@@ -128,7 +128,17 @@ xpos=0in,ypos=-5in]{*correspondence: \texttt{dbdesai@ucsd.edu}}
 
 % TODO
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum. Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. 
+    BRICK is a schema for representing various building equipment,
+    including but not limited to, HVAC air handling units and carbon dioxide
+    sensors in different rooms. While the schema is a clear step up over the
+    current state-of-the-art, its potential is severely hindered because
+    it is not backwards compatible. This means that converting CSV
+    files storing building data to a BRICK-compatible data format is a
+    cumbersome and imperfect process as different systems use different
+    conventions to denote the same systems. This conversion usually required
+    human involvement until now. AUTOBRICK is a software tool that automates
+    this conversion with minimal human intervention and provides an order
+    of magnitude greater speed up (90x) over the current state of the art.
 \end{abstract}
 %\keywords{First keyword \and Second keyword \and More} % (optional)
 \vspace{0.35cm}
@@ -156,7 +166,14 @@ for commercial buildings, improve interoperability between different buildings,
 and pave the way for well-defined ways of analyses related to planned
 maintenance and machine learning, etc. \cite{balaji_2016}. 
 
-Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a slow process bogged down by manual interventions into partially-automated processes and grunt work. This process involves custom data transformations, object-relationship definitions, and manually plugging intermediate results into various heterogeneous frameworks to get a Turtle file parseable by Brick. Different kinds of building point label (metadata string) formats that sabotage the notion of a ‘one-size fits all’ solution further intensify these challenges.  Additionally, this is also motivated by real-life use cases such as the COVID-19 global pandemic, where the public safety regulations in indoor environments (classrooms, offices, etc.) remain a massively unsolved research question and challenge at scale.
+Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a
+slow process bogged down by manual interventions into partially-automated
+processes and grunt work. This process involves custom data transformations,
+object-relationship definitions, and manually plugging intermediate results
+into various heterogeneous frameworks to get a Turtle file parseable by Brick.
+A Turtle file is a data format that expresses data in a RDF model which can be used to store graph-like info for
+relationships between different entities, in this case, building sub-systems and
+sensors. Different kinds of building point label (metadata string) formats that sabotage the notion of a ‘one-size fits all’ solution further intensify these challenges.  Additionally, this is also motivated by real-life use cases such as the COVID-19 global pandemic, where the public safety regulations in indoor environments (classrooms, offices, etc.) remain a massively unsolved research question and challenge at scale.
 
 
 \section{Background}
@@ -164,7 +181,8 @@ Converting arbitrary metadata schema to Brick (i.e., 'Brickification') is a slow
 \begin{figure}[H]
   \centering
   \fbox{\includegraphics[scale=0.17]{traditional_workflow.png}}
-  \caption{ Traditional pre-existing Brickification workflow as per the tutorial in 4(1) }
+  \caption{ Traditional pre-existing Brickification workflow as per the
+  tutorial in \cite{gtfierro225_2020} }
   \label{fig:fig1}
 \end{figure}
 
@@ -187,13 +205,24 @@ As symbolized in Figure 1, the data transformations and most of the API injectio
 \begin{figure}[H]
   \centering
   \fbox{\includegraphics[scale=0.45]{autobrick_workflow.png}}
-  \caption{The proposed workflow through AutoBrick}
+  \caption{The proposed workflow through AUTOBRICK}
   \label{fig:fig2}
 \end{figure}
 
-‘AutoBrick’ is an end-to-end system for automating and accelerating the conversion of point labels into turtle files with Brick terminology, which can be visualized, queried, and utilized by the Brick programming platform. As displayed in Figure 2, the tool takes a configuration file where users can declaratively specify all details about their data and workload (related to data location, point label format details, and additional parsing details). AutoBrick automates all needed data transformations to pre-process the point labels and extract relevant information of various units/sensors and categories related to specific building objects. AutoBrick utilizes pre-written / pre-loaded standard ER/RDF specifications and existing APIs to inject and stitch them on the pre-processed data as per the original sequence of steps followed for Brickification. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload and address automation, acceleration, and scalability improvements on top of the existing implementations. 
+‘AUTOBRICK’ is an end-to-end system for automating and accelerating the conversion of point labels into turtle files with Brick terminology, which can be visualized, queried, and utilized by the Brick programming platform. As displayed in Figure 2, the tool takes a configuration file where users can declaratively specify all details about their data and workload (related to data location, point label format details, and additional parsing details). AUTOBRICK automates all needed data transformations to pre-process the point labels and extract relevant information of various units/sensors and categories related to specific building objects. AUTOBRICK utilizes pre-written / pre-loaded standard ER/RDF specifications and existing APIs to inject and stitch them on the pre-processed data as per the original sequence of steps followed for Brickification. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload and address automation, acceleration, and scalability improvements on top of the existing implementations. 
 
-	AutoBrick allows for flexibility in using arbitrary CSV files and chosen/specified point label formats. With the project, we give the power in the user’s hands for them to decide the appropriate dataset parsing/preprocessing strategies, rather than making unverified assumptions about point label structures or utilizing unreliable custom static analysis or auto-generation techniques. AutoBrick has already “brickified” 41 point label datasets of various buildings in UCSD’s Engineering Department, reducing the need for human intervention to a matter of minutes. Initial experiments and demos have already showcased AutoBrickify reducing ~10-15 mins of manual grunt work as part of “brickifying” one dataset (as part of the tutorial in 4(1)) to a matter of <10 seconds, achieving orders-of-magnitude (over 90x) speed-ups and scalability!
+	AUTOBRICK allows for flexibility in using arbitrary CSV files and
+    chosen/specified point label formats. With the project, we give the power
+    in the user’s hands for them to decide the appropriate dataset
+    parsing/preprocessing strategies, rather than making unverified assumptions
+    about point label structures or utilizing unreliable custom static analysis
+    or auto-generation techniques. AUTOBRICK has already “brickified” 41 point
+    label datasets of various buildings in UCSD’s Engineering Department,
+    reducing the need for human intervention to a matter of minutes. Initial
+    experiments and demos have already showcased AUTOBRICKify reducing ~10-15
+    mins of manual grunt work as part of “brickifying” one dataset (as part of
+    the tutorial in \cite{gtfierro225_2020}) to a matter of <10 seconds, 
+    achieving orders-of-magnitude (over 90x) speed-ups and scalability!
 
 \section{Methods}
 We use a combination of python and shell scripts to execute the workload in terms of the core logic to parse the point labels and loading and injecting pre-existing APIs at different stages of the process.  
@@ -216,11 +245,11 @@ Our validation process involves both automated and manual aspects. Since we don'
 \section{Work Extensions}
 One of the biggest challenges faced in the Brickification workflow is the
 predictions of Brick Classes by the Reconciliation API, which have only been
-around 30\% accurate \cite{gtfierro225_2020}. The Reconciliation API uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AutoBrick directly uses the latest version of the API, automatically reflecting better results as the API improves. 
+around 30\% accurate \cite{gtfierro225_2020}. The Reconciliation API uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AUTOBRICK directly uses the latest version of the API, automatically reflecting better results as the API improves. 
 
 	The second part of augmenting the tool’s robustness relates to dealing with point label values with an unequal number of splits with the specified delimiters. In our current implementation, we assume the point labels split into a uniform number of elements. For point labels that split into fewer values, we consider these point-labels invalid (as we did encounter spurious point label values during our testing). Filtering out these point-labels renders the remaining values invalid. During the preprocessing stage, we drop rows with any null values. In other words, we treat point labels with the maximum number of splits possible in the dataset as the only legitimate kind of point label value for that dataset. Dealing with diverse but correct formats of point labels in a single dataset is an open research question needing collaboration with domain experts and is left to future work.
 
-Finally, we are also working on a virtual reality front end to interact and
+Finally, we also implemented a virtual reality front end to interact and
 query with the automatically generated turtle files. The environment is set up
 as a scene on a platform called ARENA \cite{conix-center}. We set up a server that listens for
 events and user interactions with the 3D objects in ARENA and translates those
@@ -228,12 +257,12 @@ interactions into queries performed on the BRICK-compatible building
 information. This environment allows us to map physical spaces into equivalent virtual ones.
 
 \section{Results and Conclusion}
-AutoBrick automates and accelerates a painfully manual process, thereby
+AUTOBRICK automates and accelerates a painfully manual process, thereby
 empowering building management and vendors to truly realize the power of
 data-driven applications and advanced analytics to augment user experience in
-commercial buildings. AutoBrick also gives rise to the potential of
+commercial buildings. AUTOBRICK also gives rise to the potential of
 representing building sub-systems as virtual spaces to reduce the need for
-engineers to physically climb into the building's HVAC system equipment and virtually observe and ‘interact’ with sensor setpoints. To truly reap the benefits of AutoBrick, the workflow and use case coverage need to be continually examined by domain experts and industry practitioners to ensure the tool meets their needs at all times. This paper aims to set the foundation for tangibly realizing ‘smart’ buildings and adopt technological advancements moving forward.
+engineers to physically climb into the building's HVAC system equipment and virtually observe and ‘interact’ with sensor setpoints. To truly reap the benefits of AUTOBRICK, the workflow and use case coverage need to be continually examined by domain experts and industry practitioners to ensure the tool meets their needs at all times. This paper aims to set the foundation for tangibly realizing ‘smart’ buildings and adopt technological advancements moving forward.
 
 % \paragraph{Paragraph}
 % \lipsum[7]
