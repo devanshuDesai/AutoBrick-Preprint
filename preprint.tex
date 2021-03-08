@@ -126,13 +126,12 @@ xpos=0in,ypos=-5in]{*correspondence: \texttt{dbdesai@ucsd.edu}}
   
 \maketitle
 
-% TODO
 \begin{abstract}
     BRICK is a schema for representing various building equipment,
     including but not limited to, HVAC air handling units and carbon dioxide
     sensors in different rooms. While the schema is a clear step up over the
     current state-of-the-art, its potential is severely hindered because
-    it is not backwards compatible. This means that converting CSV
+    it is not backwards compatible. This means that converting \texttt{CSV}
     files storing building data to a BRICK-compatible data format is a
     cumbersome and imperfect process as different systems use different
     conventions to denote the same systems. This conversion usually required
@@ -170,8 +169,8 @@ Converting arbitrary metadata schema to Brick (i.e., \emph{'Brickification'}) is
 slow process bogged down by manual interventions into partially-automated
 processes and grunt work. This process involves custom data transformations,
 object-relationship definitions, and manually plugging intermediate results
-into various heterogeneous frameworks to get a Turtle file parseable by Brick.
-A Turtle file is a data format that expresses data in a RDF model which can be used to store graph-like info for
+into various heterogeneous frameworks to get a \texttt{Turtle} file parseable by Brick.
+A \texttt{Turtle} file is a data format that expresses data in a RDF model which can be used to store graph-like info for
 relationships between different entities, in this case, building sub-systems and
 sensors. Different kinds of building point label (metadata string) formats that sabotage the notion of a ‘one-size fits all’ solution further intensify these challenges.  Additionally, this is also motivated by real-life use cases such as the COVID-19 global pandemic, where the public safety regulations in indoor environments (classrooms, offices, etc.) remain a massively unsolved research question and challenge at scale.
 
@@ -180,14 +179,14 @@ sensors. Different kinds of building point label (metadata string) formats that 
 
 The traditional Brickification workflow involves:
 \begin{enumerate}
-    \item an open-source Excel-like tool called ‘OpenRefine,’ where users need
+    \item an open-source Excel-like tool called ‘\emph{OpenRefine},’ where users need
         to perform manual data transformations
         \cite{gtfierro225_2020},
-    \item a ‘Reconciliation API,’ to infer the class of specific objects in
+    \item a ‘\emph{Reconciliation API},’ to infer the class of specific objects in
         terms of Brick’s vocabulary \cite{brickschema},
-    \item Entity-relationship definitions in a .txt file, to utilize in the
+    \item Entity-relationship definitions in a \texttt{.txt} file, to utilize in the
         turtle file \cite{gtfierro}, and
-    \item a tool called ‘Brick Builder’ to convert the processed data into its
+    \item a tool called ‘\emph{Brick Builder}’ to convert the processed data into its
         turtle file \cite{brick_ttl_viewer}.
 \end{enumerate}
 As symbolized in Figure \ref{fig:fig1}, the data transformations and most of the API injections and integrations need to be manually done by the user. The BrickBuilder tool is the only component to automate the last part of this workflow. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload. We don’t seek to reinvent the wheel here but address automation, acceleration, and scalability improvements on top of these existing systems.
@@ -214,7 +213,7 @@ conversion of point labels into turtle files with Brick terminology, which can
 be visualized, queried, and utilized by the Brick programming platform. As
 displayed in Figure \ref{fig:fig2}, the tool takes a configuration file where users can declaratively specify all details about their data and workload (related to data location, point label format details, and additional parsing details). AUTOBRICK automates all needed data transformations to pre-process the point labels and extract relevant information of various units/sensors and categories related to specific building objects. AUTOBRICK utilizes pre-written / pre-loaded standard ER/RDF specifications and existing APIs to inject and stitch them on the pre-processed data as per the original sequence of steps followed for Brickification. We recognize the research and practical utility of the frameworks already created for use in the old Brickification workload and address automation, acceleration, and scalability improvements on top of the existing implementations. 
 
-	AUTOBRICK allows for flexibility in using arbitrary CSV files and
+	AUTOBRICK allows for flexibility in using arbitrary \texttt{CSV} files and
     chosen/specified point label formats. With the project, we give the power
     in the user’s hands for them to decide the appropriate dataset
     parsing/preprocessing strategies, rather than making unverified assumptions
@@ -222,17 +221,21 @@ displayed in Figure \ref{fig:fig2}, the tool takes a configuration file where us
     or auto-generation techniques. AUTOBRICK has already \emph{"brickified}" 41 point
     label datasets of various buildings in UCSD’s Engineering Department,
     reducing the need for human intervention to a matter of minutes. Initial
-    experiments and demos have already showcased \emph{Autobrickify} reducing ~10-15
-    mins of manual grunt work as part of \emph{"brickifying}" one dataset (as part of
-    the tutorial in \cite{gtfierro225_2020}) to a matter of <10 seconds, 
-    achieving orders-of-magnitude (over 90x) speed-ups and scalability!
+    experiments and demos have already showcased \emph{Autobrickify} reducing
+    \emph{~10-15 mins} of manual grunt work as part of \emph{"brickifying}" one dataset (as part of
+    the tutorial in \cite{gtfierro225_2020}) to a matter of \emph{<10 seconds}, 
+    achieving orders-of-magnitude \textbf{(over 90x)} speed-ups and scalability!
 
 \section{Methods}
-We use a combination of python and shell scripts to execute the workload in terms of the core logic to parse the point labels and loading and injecting pre-existing APIs at different stages of the process.  
-To automate data transformations, we use the pandas module to load the data in memory and leverage the supplied configurations to perform data manipulations with in-built functions provided by the module to identify objects/pieces of equipment such as AHUs, Zones, VAVs, and their corresponding class types. 
+We use a combination of \texttt{Python} and shell scripts to execute the workload in terms of the core logic to parse the point labels and loading and injecting pre-existing APIs at different stages of the process.  
+To automate data transformations, we use the pandas module to load the data in
+memory and leverage the supplied configurations to perform data manipulations
+with in-built functions provided by the module to identify objects/pieces of
+equipment such as \emph{AHU}s, \emph{Zone}s, \emph{VAV}s, and their corresponding class types. 
 
 	Utilizing shell, we write some custom scripts to clone the APIs, load them in the execution environment, and call them according to their instructions to supply the pre-processed data to their API function calls automatically.  
-	Because modules such as pandas are pre-installed in a standard python environment, the tool doesn’t have any unique dependencies. It just needs to rely on the brick-builder API’s dependencies (i.e., two modules, brickschema and rdflib). The lack of dependencies further makes the tool lightweight for smooth usage. The requirements are directly taken (and hence can even be updated) from the loaded APIs themselves, making it seamless to piggyback on top of the APIs made for Brickification.
+    Because modules such as \texttt{Pandas} are pre-installed in a standard
+    \texttt{Python} environment, the tool doesn’t have any unique dependencies. It just needs to rely on the brick-builder API’s dependencies (i.e., two modules, brickschema and rdflib). The lack of dependencies further makes the tool lightweight for smooth usage. The requirements are directly taken (and hence can even be updated) from the loaded APIs themselves, making it seamless to piggyback on top of the APIs made for Brickification.
 
 \begin{figure}[H]
   \centering
@@ -247,8 +250,8 @@ Our validation process involves both automated and manual aspects. Since we don'
 
 \section{Work Extensions}
 One of the biggest challenges faced in the Brickification workflow is the
-predictions of Brick Classes by the Reconciliation API, which have only been
-around 30\% accurate \cite{gtfierro225_2020}. The Reconciliation API uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AUTOBRICK directly uses the latest version of the API, automatically reflecting better results as the API improves. 
+predictions of Brick Classes by the \emph{Reconciliation API}, which have only been
+around 30\% accurate \cite{gtfierro225_2020}. The \emph{Reconciliation API} uses an extensive key-value pair dictionary to extract and attach relevant ontology for a sensor abbreviation in a point label, but the API isn’t comprehensive. Ultimately, the turtle files need to be precisely correct for effective ETL and Analytics utilization. To mitigate this, we also formulated scripts to extract additional key-value pairs from Johnson Controls’ documentation to update the API and get more accurate predictions. However, this process of incorporating all key-value pairs may never be fully comprehensive and is subject to future updates. On the bright side, AUTOBRICK directly uses the latest version of the API, automatically reflecting better results as the API improves. 
 
 	The second part of augmenting the tool’s robustness relates to dealing with point label values with an unequal number of splits with the specified delimiters. In our current implementation, we assume the point labels split into a uniform number of elements. For point labels that split into fewer values, we consider these point-labels invalid (as we did encounter spurious point label values during our testing). Filtering out these point-labels renders the remaining values invalid. During the preprocessing stage, we drop rows with any null values. In other words, we treat point labels with the maximum number of splits possible in the dataset as the only legitimate kind of point label value for that dataset. Dealing with diverse but correct formats of point labels in a single dataset is an open research question needing collaboration with domain experts and is left to future work.
 
